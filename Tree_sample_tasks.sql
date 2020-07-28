@@ -1,3 +1,8 @@
+Create database [Tree_tasks]
+go
+SET DATEFORMAT dmy;  
+GO 
+
 If exists (select * from sysobjects where name = 'calendar') drop table calendar;
 If exists (select * from sysobjects where name = 'rate') drop table rate;
 If exists (select * from sysobjects where name = 'pool') drop table pool;
