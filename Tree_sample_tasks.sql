@@ -269,3 +269,16 @@ from
 	
 	group by finish_up
 GO
+-- Option II
+select min(date_dt) AS min_date, MAX([type]) AS [type],sum(qty) AS [sum_qty] 
+          from (
+				select this.[date] as date_dt, this.[type], this.qty
+					 , isNull(prev.[prev_type_dt]
+							 , DATEADD(d,-1,(select  min(t3.[date]) from task3 AS t3))) AS prev_dt 
+				  from task3 this
+						OUTER APPLY (select MAX([date]) AS prev_type_dt 
+									   from task3 tt 
+									  where tt.type = iif(this.type = 1,0,1) and tt.date < this.date 
+									) AS prev
+				) AS prepare
+		group by prev_dt 
